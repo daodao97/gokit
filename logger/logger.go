@@ -2,6 +2,7 @@ package logger
 
 var _logger = newStdOutLogger()
 var limitLevel = LevelDebug
+var withCaller = false
 
 type Level int
 
@@ -30,6 +31,10 @@ type Logger interface {
 
 func SetLoggerLevel(customLimitLevel Level) {
 	limitLevel = customLimitLevel
+}
+
+func SetCaller(enable bool) {
+	withCaller = enable
 }
 
 func SetLogger(customLogger Logger) {

@@ -36,7 +36,10 @@ func (s stdOutLogger) Log(level Level, message string, keyValues ...interface{})
 	if level < limitLevel {
 		return
 	}
-	args := []interface{}{level.String(), "message", message, "caller:", caller(4)}
+	args := []interface{}{level.String(), "message", message}
+	if withCaller {
+		args = append(args, "caller", caller(3))
+	}
 	args = append(args, keyValues...)
 
 	for i, v := range args {
