@@ -35,3 +35,7 @@ func SetLoggerLevel(customLimitLevel Level) {
 func SetLogger(customLogger Logger) {
 	_logger = customLogger
 }
+
+func Default() Logger {
+	return _logger
+}

@@ -2,9 +2,11 @@ package logger
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/fatih/color"
 	"log"
 	"os"
+	"runtime"
 )
 
 var (
@@ -34,7 +36,7 @@ func (s stdOutLogger) Log(level Level, message string, keyValues ...interface{})
 	if level < limitLevel {
 		return
 	}
-	args := []interface{}{level.String(), "message", message}
+	args := []interface{}{level.String(), "message", message, "caller:", caller(4)}
 	args = append(args, keyValues...)
 
 	for i, v := range args {
@@ -45,5 +47,12 @@ func (s stdOutLogger) Log(level Level, message string, keyValues ...interface{})
 	}
 
 	s.logger.Println(args...)
-	return
+}
+
+func caller(skip int) string {
+	_, file, line, ok := runtime.Caller(skip)
+	if ok {
+		return fmt.Sprintf("%s:%d", file, line)
+	}
+	return ""
 }
